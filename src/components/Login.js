@@ -1,16 +1,42 @@
 import {useState, useEffect} from 'react'
 import styled from 'styled-components'
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom"
+import { BrowserRouter, Routes, Route, Link, useNavigate } from "react-router-dom"
+import axios from 'axios'
+
+import Header from './Header.js'
 
 import logo from '../assets/logo.png'
 
-export default function Main(props){
+export default function Login(props){
+
+	const nav = useNavigate()
 
 	const[userEmail, setUserEmail] = useState("")
 	const[password, setPassword] = useState("")
 
-	function submitLogin(){
+	const[disabled, setDisabled] = useState(false);
 
+	function submitLogin(event){
+		event.preventDefault();
+		setDisabled(true);
+		const prom = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login',
+		{
+			email: userEmail,
+			password: password
+		})
+
+		prom.then(validLogin);
+		prom.catch(badLogin);
+	}
+
+	function validLogin(elem){
+		props.setUserData(elem.data);
+		nav('/hoje');
+	}
+
+	function badLogin(){
+		alert('Usuário ou senha inválidos');
+		setDisabled(false);
 	}
 
 	return(<Display>
@@ -18,16 +44,16 @@ export default function Main(props){
 		
 		<Form>
 			<form onSubmit={submitLogin}>
-				<input required type="text" value={userEmail} onChange={e => setUserEmail(e.target.value)} placeholder="email"/>
+				<input required type="text" value={userEmail} onChange={e => setUserEmail(e.target.value)} placeholder="email" disabled={disabled}/>
 
-				<input required type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="senha"/>
+				<input required type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="senha" disabled={disabled}/>
 
-				<button type="submit">
+				<button type="submit" disabled={disabled}>
 						Entrar
 				</button>
 			</form>
 		</Form>
-		<Link to="/cadastro"><a>Não tem uma conta? Cadastre-se!</a></Link>
+		<Link to="/cadastro"><span>Não tem uma conta? Cadastre-se!</span></Link>
 	</Display>)
 }
 
@@ -42,7 +68,7 @@ const Display = styled.div`
 		width: 180px;
 		height: auto;
 	}
-	a{
+	span{
 		color: #52B6FF;
 		text-decoration: underline;
 		font-family: Lexend Deca;
@@ -88,6 +114,13 @@ const Form = styled.div`
 			border: none;
 			color: white;
 			margin-bottom: 25px;
+
+			transition: .2s;
+			&:hover{
+				transform: scale(1.02);
+				transition: .2s;
+				cursor: pointer;
+			}			
 		}
 	}
 `
