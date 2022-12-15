@@ -19,6 +19,8 @@ export default function Habitos(props){
 	const [showCreateHabit, setShow] = useState(false);
 	const [nomeHabito, setNome] = useState("");
 
+	const [todosHabitos, setHabitos] = useState([]);
+
 	const diasSemana = ['D', 'S', 'T', 'Q', 'Q', 'S', 'S']
 
 	const config = {
@@ -33,15 +35,21 @@ export default function Habitos(props){
 	prom.catch(error);
 
 	function success(res){
-		//console.log(res);
+		setHabitos(res.data);
 	}
 
 	function error(res){
 		nav('/');
 	}
 
-	function postNovoHabito(){
+	function postNovoHabito(event){
+		event.preventDefault();
+		const prom = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits",{
+			name: nomeHabito,
+			days: diasSelec
+		},config);
 
+		prom.then((res)=> console.log(res));
 	}
 
 	function addDia(dia){
@@ -52,6 +60,7 @@ export default function Habitos(props){
 			console.log(newDia);
 		}else{
 			const newDia = [...diasSelec, dia];
+			newDia.sort();
 			setDias(newDia);
 			console.log(newDia);
 		}
@@ -86,12 +95,20 @@ export default function Habitos(props){
 					</Botoes>
 					</form>
 				</AddHabito>
+				
+				<Txt hidden={todosHabitos.length>0?true:false}>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</Txt>
 
-				<Txt>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</Txt>
+				<ListaHabitos>
+					{JSON.stringify(todosHabitos)}
+				</ListaHabitos>
 			</Content>
 		<Footer/>
 	</>)
 }
+
+const ListaHabitos = styled.div`
+
+`
 const Botoes = styled.div`
 	margin-top: 29px;
 	display: flex;
