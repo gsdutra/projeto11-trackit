@@ -46,6 +46,13 @@ export default function Habitos(props){
 		nav('/');
 	}
 
+	function done(){
+		setDisabled(false);
+		setDias([]);
+		setNome("");
+		setShow(false)
+	}
+
 	function postNovoHabito(event){
 		setDisabled(true);
 		event.preventDefault();
@@ -54,8 +61,7 @@ export default function Habitos(props){
 			days: diasSelec
 		},config);
 
-		setShow(!showCreateHabit);
-		prom.then(()=>setDisabled(false));
+		prom.then(done);
 	}
 
 	function addDia(dia){
@@ -104,7 +110,7 @@ export default function Habitos(props){
 							<button type="button" Style="
 							background: transparent;
 							color: #52B6FF;
-							" onClick={()=>setShow(false)}>Cancelar</button>
+							" onClick={done}>Cancelar</button>
 						
 							<button type="submit">Salvar</button>
 					</Botoes>
