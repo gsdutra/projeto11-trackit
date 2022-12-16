@@ -9,6 +9,8 @@ import axios from 'axios'
 import Context from './Context.js'
 import {useContext} from 'react'
 
+import trash from '../assets/trash.png'
+
 export default function Habitos(props){
 
 	const userData = useContext(Context);
@@ -18,6 +20,8 @@ export default function Habitos(props){
 	const [diasSelec, setDias] = useState([]);
 	const [showCreateHabit, setShow] = useState(false);
 	const [nomeHabito, setNome] = useState("");
+
+	const[disabled, setDisabled] = useState(false);
 
 	const [todosHabitos, setHabitos] = useState([]);
 
@@ -43,13 +47,15 @@ export default function Habitos(props){
 	}
 
 	function postNovoHabito(event){
+		setDisabled(true);
 		event.preventDefault();
 		const prom = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits",{
 			name: nomeHabito,
 			days: diasSelec
 		},config);
 
-		prom.then((res)=> console.log(res));
+		setShow(!showCreateHabit);
+		prom.then(()=>setDisabled(false));
 	}
 
 	function addDia(dia){
@@ -57,12 +63,21 @@ export default function Habitos(props){
 			const newDia = [...diasSelec];
 			newDia.splice(newDia.indexOf(dia),1);
 			setDias(newDia);
-			console.log(newDia);
+			//console.log(newDia);
 		}else{
 			const newDia = [...diasSelec, dia];
 			newDia.sort();
 			setDias(newDia);
-			console.log(newDia);
+			//console.log(newDia);
+		}
+	}
+
+	function deletarHab(id){
+		if(confirm("Tem certeza que deseja deletar o hábito?"))
+		{
+			const prom = axios.delete(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}`, config);
+
+			prom.then(()=>console.log('Hábito deletado com sucesso'));
 		}
 	}
 
@@ -76,7 +91,7 @@ export default function Habitos(props){
 
 				<AddHabito hidden={!showCreateHabit}>
 					<form onSubmit={postNovoHabito}>
-					<input required type="text" value={nomeHabito} onChange={e => setNome(e.target.value)} placeholder="nome do hábito"/>
+					<input required type="text" value={nomeHabito} onChange={e => setNome(e.target.value)} placeholder="nome do hábito" disabled={disabled}/>
 					<Dias>
 						{diasSemana.map((e, i)=>
 						<Dia key={i} onClick={()=>addDia(i)}
@@ -99,12 +114,49 @@ export default function Habitos(props){
 				<Txt hidden={todosHabitos.length>0?true:false}>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</Txt>
 
 				<ListaHabitos>
-					{JSON.stringify(todosHabitos)}
+					{todosHabitos.map((eHab)=>
+					<AddHabito>
+						<TituloHab>
+							<span>{eHab.name}</span>
+							<img src={trash} alt="" onClick={()=>deletarHab(eHab.id)}/>
+						</TituloHab>
+						<Dias>
+							{diasSemana.map((e, i)=>
+							<Dia key={i} selecionado={eHab.days.includes(i)}
+							>{e}</Dia>
+							)}
+						</Dias>
+					</AddHabito>
+					)}
 				</ListaHabitos>
 			</Content>
 		<Footer/>
 	</>)
 }
+
+const TituloHab = styled.div`
+	font-family: Lexend Deca;
+	font-size: 20px;
+	font-weight: 400;
+	line-height: 25px;
+	letter-spacing: 0em;
+	text-align: left;
+	color: #666666;
+	margin-bottom: 8px;
+	display: flex;
+	justify-content: space-between;
+	img{
+		height: 15px;
+		width: auto;
+
+		transition: .2s;
+			&:hover{
+				transform: scale(1.2);
+				transition: .2s;
+				cursor: pointer;
+			}		
+	}
+`
 
 const ListaHabitos = styled.div`
 
@@ -141,7 +193,6 @@ const Dia = styled.div`
 	}
 `
 const AddHabito = styled.div`
-
 		background: white;
 		padding: 18px;
 		box-sizing: border-box;
@@ -209,11 +260,11 @@ const MeusH = styled.div`
 		font-size: 27px;
 		font-weight: 400;
 		color: white;
-		transition: .2s;
 		line-height: 100%;
 
 		padding-bottom: 5px;
 
+		transition: .2s;
 			&:hover{
 				transform: scale(1.07);
 				transition: .2s;
