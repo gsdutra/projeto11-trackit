@@ -9,7 +9,6 @@ import Hoje from './components/Hoje'
 import Historico from './components/Historico'
 
 import Context from './Contexts/ContextUserData.js'
-import ContextP from './Contexts/ContextPercent.js'
 
 
 export default function App(){
@@ -17,9 +16,9 @@ export default function App(){
 	const [userData, setUserData] = useState("")
 	const [percent, setPercent] = useState("")
 
-	const valueArr = [userData, percent, setPercent];
+	const contextObj = {userData: userData, percent: percent, setPercent: setPercent};
 return(<>
-	<Context.Provider value={userData}>
+	<Context.Provider value={contextObj}>
 		<BrowserRouter>
 			<Routes>
 				<Route path="/" element={<Login setUserData={setUserData}/>}/>

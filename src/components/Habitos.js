@@ -31,7 +31,7 @@ export default function Habitos(props){
 
 	const config = {
 		headers: {
-			"Authorization": `Bearer ${userData.token}`
+			"Authorization": `Bearer ${userData.userData.token}`
 		}
 	}
 

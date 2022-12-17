@@ -14,17 +14,18 @@ import Context from '../Contexts/ContextUserData.js'
 
 export default function Hoje(props){
 
-	const userData = useContext(Context);
+	const contextObj = useContext(Context);
 
 	const [listaHabitos, setHabitos] = useState([]);
 
-	const [verifPorcent, setPorcent] = useState(0);
+	const verifPorcent = contextObj.percent;
+	const setPercent = contextObj.setPercent;
 
 	const nav= useNavigate();
 
 	const config = {
 		headers: {
-			"Authorization": `Bearer ${userData.token}`
+			"Authorization": `Bearer ${contextObj.userData.token}`
 		}
 	}
 
@@ -46,7 +47,7 @@ export default function Hoje(props){
 			}
 		}
 		var ratio = (doneHabits/res.data.length)*100;
-		setPorcent(ratio.toFixed(0));
+		setPercent(ratio.toFixed(0));
 	}
 
 	function error(res){
@@ -82,8 +83,9 @@ export default function Hoje(props){
 							{e.name}
 							{e.done?'Feito':'notFeito'}
 						</div>
-						<div Style="font-size: 13px;">
-							Sequência atual: {e.currentSequence} dias<br/>
+						<div Style={`font-size: 13px; color:${e.done?'#8FC549':'#666666'}`}>
+							Sequência atual: {e.currentSequence} dias
+						</div><div Style={`font-size: 13px; color:${e.currentSequence===e.highestSequence?'#8FC549':'#666666'}`}>
 							Seu recorde: {e.highestSequence} dias
 						</div>
 					</div>

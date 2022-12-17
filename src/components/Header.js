@@ -8,12 +8,12 @@ import Context from '../Contexts/ContextUserData'
 
 export default function name(props){
 
-    const userData = useContext(Context);
+    const contextObj = useContext(Context);
 
     return(<HeaderStyled>
         <img src={TrackIt}/>
         <PfpImage>
-            <img src={userData.image}/>
+            <img src={contextObj.userData.image}/>
         </PfpImage>
     </HeaderStyled>)
 }

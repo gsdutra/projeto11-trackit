@@ -2,8 +2,14 @@ import {Link} from 'react-router-dom'
 import styled from 'styled-components'
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import "react-circular-progressbar/dist/styles.css";
+import {useContext} from 'react'
+import Context from '../Contexts/ContextUserData.js'
 
 export default function Footer(props){
+
+    const contextObj = useContext(Context);
+    const percent = contextObj.percent;
+
     return(<>
     <FooterStyled>
         <Link to='/habitos'>Hábitos</Link>
@@ -13,7 +19,7 @@ export default function Footer(props){
     
     <Link to='/hoje'><Hoje><span>
         <CircularProgressbar
-            value={34}
+            value={percent}
             text="Hoje"
             styles={buildStyles({
             backgroundColor: "#3e98c7",
