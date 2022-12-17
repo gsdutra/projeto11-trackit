@@ -13,7 +13,7 @@ export default function name(props){
     return(<HeaderStyled>
         <img src={TrackIt}/>
         <PfpImage>
-            <img src={userData[0].image}/>
+            <img src={userData.image}/>
         </PfpImage>
     </HeaderStyled>)
 }
