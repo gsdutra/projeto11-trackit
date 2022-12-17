@@ -1,6 +1,6 @@
 import {Link} from 'react-router-dom'
 import styled from 'styled-components'
-import { CircularProgressbar } from 'react-circular-progressbar';
+import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import "react-circular-progressbar/dist/styles.css";
 
 export default function Footer(props){
@@ -11,7 +11,17 @@ export default function Footer(props){
     </FooterStyled>
     
     
-    <Link to='/hoje'><Hoje><span><CircularProgressbar value={3} text="Hoje"/></span></Hoje></Link>
+    <Link to='/hoje'><Hoje><span>
+        <CircularProgressbar
+            value={34}
+            text="Hoje"
+            styles={buildStyles({
+            backgroundColor: "#3e98c7",
+            textColor: "#fff",
+            pathColor: "#fff",
+            trailColor: "transparent"
+            })}/>
+        </span></Hoje></Link>
     </>)
 }
 const Hoje = styled.div`
@@ -32,6 +42,8 @@ const Hoje = styled.div`
     font-size: 18px;
     font-weight: 400;
     line-height: 22px;
+    padding: 6px;
+    box-sizing: border-box;
 `
 
 const FooterStyled = styled.div`

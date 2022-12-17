@@ -2,6 +2,7 @@ import {useState, useEffect} from 'react'
 import styled from 'styled-components'
 import { BrowserRouter, Routes, Route, Link, useNavigate } from "react-router-dom"
 import axios from 'axios'
+import * as Loader from "react-loader-spinner";
 
 import Header from './Header.js'
 
@@ -49,7 +50,10 @@ export default function Login(props){
 				<input required type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="senha" disabled={disabled}/>
 
 				<button type="submit" disabled={disabled}>
-						Entrar
+						{disabled?
+						<Loader.ThreeDots color="white" height="70" width="70" />
+						:
+						'Entrar'}
 				</button>
 			</form>
 		</Form>
@@ -114,6 +118,11 @@ const Form = styled.div`
 			border: none;
 			color: white;
 			margin-bottom: 25px;
+
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
 
 			transition: .2s;
 			&:hover{

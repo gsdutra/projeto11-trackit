@@ -11,6 +11,8 @@ import {useContext} from 'react'
 
 import trash from '../assets/trash.png'
 
+import * as Loader from "react-loader-spinner";
+
 export default function Habitos(props){
 
 	const userData = useContext(Context);
@@ -112,7 +114,11 @@ export default function Habitos(props){
 							color: #52B6FF;
 							" onClick={done}>Cancelar</button>
 						
-							<button type="submit">Salvar</button>
+							<button type="submit">
+								{disabled?
+								<Loader.ThreeDots color="white" height="50" width="50" />
+								:
+								'Salvar'}</button>
 					</Botoes>
 					</form>
 				</AddHabito>
@@ -171,6 +177,11 @@ const Botoes = styled.div`
 	margin-top: 29px;
 	display: flex;
 	justify-content: flex-end;
+	button{
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
 `
 const Dias = styled.div`
 	display: flex;
