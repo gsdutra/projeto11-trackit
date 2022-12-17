@@ -8,12 +8,16 @@ import Habitos from './components/Habitos'
 import Hoje from './components/Hoje'
 import Historico from './components/Historico'
 
-import Context from './components/Context'
+import Context from './Contexts/ContextUserData.js'
+import ContextP from './Contexts/ContextPercent.js'
+
 
 export default function App(){
 
 	const [userData, setUserData] = useState("")
+	const [percent, setPercent] = useState("")
 
+	const valueArr = [userData, percent, setPercent];
 return(<>
 	<Context.Provider value={userData}>
 		<BrowserRouter>

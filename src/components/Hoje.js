@@ -10,13 +10,15 @@ import verified from '../assets/verified.png'
 
 import {useContext} from 'react'
 
-import Context from './Context'
+import Context from '../Contexts/ContextUserData.js'
 
 export default function Hoje(props){
 
 	const userData = useContext(Context);
 
 	const [listaHabitos, setHabitos] = useState([]);
+
+	const [verifPorcent, setPorcent] = useState(0);
 
 	const nav= useNavigate();
 
@@ -35,6 +37,16 @@ export default function Hoje(props){
 
 	function success(res){
 		setHabitos(res.data);
+
+		var doneHabits = 0;
+
+		for (let index = 0; index < res.data.length; index++) {
+			if(res.data[index].done){
+				doneHabits++;
+			}
+		}
+		var ratio = (doneHabits/res.data.length)*100;
+		setPorcent(ratio.toFixed(0));
 	}
 
 	function error(res){
@@ -42,8 +54,9 @@ export default function Hoje(props){
 	}
 
 	function toggleFeito(id, done){
-		console.log('V');
-		const prom = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/${done?'uncheck':'check'}`, config);
+		const prom = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/${done?'uncheck':'check'}`, null, config);
+
+		//console.log(prom);
 
 		prom.then(res=>console.log(res));
 		prom.catch(res=>console.log(res));
@@ -55,8 +68,11 @@ export default function Hoje(props){
 			<Data>
 				{diasSemana[dayjs().day()]}, {dayjs().date()}/{dayjs().month()+1}
 			</Data>
-			<Concluidos>
-				Nenhum hábito concluído ainda
+			<Concluidos verde={verifPorcent>0?true:false}>
+				{verifPorcent>0?
+				`${verifPorcent}% dos hábitos concluídos`
+				:
+				'Nenhum hábito concluído ainda'}
 			</Concluidos>
 			<ListaHabitos>
 				{listaHabitos.map((e, i)=>
@@ -71,7 +87,7 @@ export default function Hoje(props){
 							Seu recorde: {e.highestSequence} dias
 						</div>
 					</div>
-					<Box>
+					<Box done={e.done}>
 						<img src={verified} alt="" done={e.done} onClick={()=>toggleFeito(e.id, e.done)}/>
 					</Box>
 				</Habito>
@@ -136,7 +152,7 @@ const Content = styled.div`
 `
 
 const Concluidos = styled.div`
-	color: #BABABA;
+	color: ${props=>props.verde?'#8FC549':'#BABABA'};
 	font-family: Lexend Deca;
 	font-size: 18px;
 	font-weight: 400;

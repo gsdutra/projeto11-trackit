@@ -4,7 +4,7 @@ import TrackIt from '../assets/TrackIt.png'
 
 import {useContext} from 'react'
 
-import Context from './Context'
+import Context from '../Contexts/ContextUserData'
 
 export default function name(props){
 
@@ -13,7 +13,7 @@ export default function name(props){
     return(<HeaderStyled>
         <img src={TrackIt}/>
         <PfpImage>
-            <img src={userData.image}/>
+            <img src={userData[0].image}/>
         </PfpImage>
     </HeaderStyled>)
 }

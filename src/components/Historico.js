@@ -6,7 +6,7 @@ import styled from 'styled-components'
 import { BrowserRouter, Routes, Route, Link, useNavigate } from "react-router-dom"
 import axios from 'axios'
 
-import Context from './Context.js'
+import Context from '../Contexts/ContextUserData.js'
 import {useContext} from 'react'
 
 export default function Historico(props){

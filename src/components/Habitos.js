@@ -6,7 +6,7 @@ import styled from 'styled-components'
 import { BrowserRouter, Routes, Route, Link, useNavigate } from "react-router-dom"
 import axios from 'axios'
 
-import Context from './Context.js'
+import Context from '../Contexts/ContextUserData.js'
 import {useContext} from 'react'
 
 import trash from '../assets/trash.png'
@@ -126,8 +126,8 @@ export default function Habitos(props){
 				<Txt hidden={todosHabitos.length>0?true:false}>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</Txt>
 
 				<ListaHabitos>
-					{todosHabitos.map((eHab)=>
-					<AddHabito>
+					{todosHabitos.map((eHab, ind)=>
+					<AddHabito key={ind}>
 						<TituloHab>
 							<span>{eHab.name}</span>
 							<img src={trash} alt="" onClick={()=>deletarHab(eHab.id)}/>
