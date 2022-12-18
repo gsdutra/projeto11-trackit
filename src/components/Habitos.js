@@ -94,17 +94,17 @@ export default function Habitos(props){
 			<Content>
 				<MeusH>
 					<div>Meus hábitos</div>
-					<button onClick={()=>setShow(true)}>+</button>
+					<button onClick={()=>setShow(true)} data-test="habit-create-btn">+</button>
 				</MeusH>
 
-				<AddHabito hidden={!showCreateHabit}>
+				<AddHabito hidden={!showCreateHabit} data-test="habit-create-container">
 					<form onSubmit={postNovoHabito}>
-					<input required type="text" value={nomeHabito} onChange={e => setNome(e.target.value)} placeholder="nome do hábito" disabled={disabled}/>
+					<input required type="text" value={nomeHabito} onChange={e => setNome(e.target.value)} placeholder="nome do hábito" disabled={disabled} data-test="habit-name-input"/>
 					<Dias>
 						{diasSemana.map((e, i)=>
 						<Dia key={i} onClick={()=>addDia(i)}
-						selecionado={diasSelec.includes(i)}
-						>{e}</Dia>
+						selecionado={diasSelec.includes(i)} 
+						data-test="habit-day">{e}</Dia>
 						)}
 					</Dias>
 					<Botoes>
@@ -112,9 +112,9 @@ export default function Habitos(props){
 							<button type="button" Style="
 							background: transparent;
 							color: #52B6FF;
-							" onClick={done}>Cancelar</button>
+							" onClick={done} data-test="habit-create-cancel-btn">Cancelar</button>
 						
-							<button type="submit">
+							<button type="submit" data-test="habit-create-save-btn">
 								{disabled?
 								<Loader.ThreeDots color="white" height="50" width="50" />
 								:
@@ -127,15 +127,15 @@ export default function Habitos(props){
 
 				<ListaHabitos>
 					{todosHabitos.map((eHab, ind)=>
-					<AddHabito key={ind}>
+					<AddHabito key={ind} data-test="habit-container">
 						<TituloHab>
-							<span>{eHab.name}</span>
-							<img src={trash} alt="" onClick={()=>deletarHab(eHab.id)}/>
+							<span data-test="habit-name">{eHab.name}</span>
+							<img src={trash} alt="" onClick={()=>deletarHab(eHab.id)} data-test="habit-delete-btn"/>
 						</TituloHab>
 						<Dias>
 							{diasSemana.map((e, i)=>
 							<Dia key={i} selecionado={eHab.days.includes(i)}
-							>{e}</Dia>
+							data-test="habit-day">{e}</Dia>
 							)}
 						</Dias>
 					</AddHabito>

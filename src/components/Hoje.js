@@ -59,17 +59,17 @@ export default function Hoje(props){
 
 		//console.log(prom);
 
-		prom.then(res=>console.log(res));
-		prom.catch(res=>console.log(res));
+		//prom.then(res=>console.log(res));
+		//prom.catch(res=>console.log(res));
 	}
 
 	return(<>
 		<Header/>
 		<Content>
-			<Data>
+			<Data data-test="today">
 				{diasSemana[dayjs().day()]}, {dayjs().date()}/{dayjs().month()+1}
 			</Data>
-			<Concluidos verde={verifPorcent>0?true:false}>
+			<Concluidos verde={verifPorcent>0?true:false} data-test="today-counter">
 				{verifPorcent>0?
 				`${verifPorcent}% dos hábitos concluídos`
 				:
@@ -77,20 +77,20 @@ export default function Hoje(props){
 			</Concluidos>
 			<ListaHabitos>
 				{listaHabitos.map((e, i)=>
-				<Habito key={i}>
+				<Habito key={i} data-test="today-habit-container">
 					<div>
-						<div Style="font-size: 20px; line-height: 35px;">
+						<div Style="font-size: 20px; line-height: 35px;" data-test="today-habit-name">
 							{e.name}
 							{e.done?'Feito':'notFeito'}
 						</div>
-						<div Style={`font-size: 13px; color:${e.done?'#8FC549':'#666666'}`}>
+						<div Style={`font-size: 13px; color:${e.done?'#8FC549':'#666666'}`} data-test="today-habit-sequence">
 							Sequência atual: {e.currentSequence} dias
-						</div><div Style={`font-size: 13px; color:${e.currentSequence===e.highestSequence?'#8FC549':'#666666'}`}>
+						</div><div Style={`font-size: 13px; color:${e.currentSequence===e.highestSequence?'#8FC549':'#666666'}`} data-test="today-habit-record">
 							Seu recorde: {e.highestSequence} dias
 						</div>
 					</div>
 					<Box done={e.done}>
-						<img src={verified} alt="" done={e.done} onClick={()=>toggleFeito(e.id, e.done)}/>
+						<img src={verified} alt="" done={e.done} onClick={()=>toggleFeito(e.id, e.done)} data-test="today-habit-check-btn"/>
 					</Box>
 				</Habito>
 				)}

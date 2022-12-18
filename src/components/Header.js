@@ -10,12 +10,14 @@ export default function name(props){
 
     const contextObj = useContext(Context);
 
-    return(<HeaderStyled>
+    return(
+    <HeaderStyled data-test="header">
         <img src={TrackIt}/>
         <PfpImage>
             <img src={contextObj.userData.image}/>
         </PfpImage>
-    </HeaderStyled>)
+    </HeaderStyled>
+    )
 }
 
 const HeaderStyled = styled.div`

@@ -44,20 +44,20 @@ export default function Cadastro(props){
 		
 		<Form>
 			<form onSubmit={submitSignIn}>
-				<input required type="email" name="email" value={form.email} onChange={handleForm} placeholder="email" disabled={disabled}/>
+				<input required type="email" name="email" value={form.email} onChange={handleForm} placeholder="email" disabled={disabled} data-test="email-input"/>
 
-				<input required type="text" name="password" value={form.password} onChange={handleForm} placeholder="senha" disabled={disabled}/>
+				<input required type="text" name="password" value={form.password} onChange={handleForm} placeholder="senha" disabled={disabled} data-test="password-input"/>
 
-				<input required type="text" name="name" value={form.name} onChange={handleForm} placeholder="nome" disabled={disabled}/>
+				<input required type="text" name="name" value={form.name} onChange={handleForm} placeholder="nome" disabled={disabled} data-test="user-name-input"/>
 
-				<input required type="url" name="image" value={form.image} onChange={handleForm} placeholder="foto" disabled={disabled}/>
+				<input required type="url" name="image" value={form.image} onChange={handleForm} placeholder="foto" disabled={disabled} data-test="user-image-input"/>
 
-				<button type="submit" disabled={disabled}>
+				<button type="submit" disabled={disabled} data-test="signup-btn">
 						Cadastrar
 				</button>
 			</form>
 		</Form>
-		<Link to="/"><span>Já tem uma conta? Faça login!</span></Link>
+		<Link to="/" data-test="login-link"><span>Já tem uma conta? Faça login!</span></Link>
 	</Display>)
 }
 

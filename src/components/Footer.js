@@ -10,14 +10,14 @@ export default function Footer(props){
     const contextObj = useContext(Context);
     const percent = contextObj.percent;
 
-    return(<>
+    return(<div data-test="menu">
     <FooterStyled>
-        <Link to='/habitos'>Hábitos</Link>
-        <Link to='/historico'>Histórico</Link>
+        <Link to='/habitos' data-test="habit-link">Hábitos</Link>
+        <Link to='/historico' data-test="history-link">Histórico</Link>
     </FooterStyled>
     
     
-    <Link to='/hoje'><Hoje><span>
+    <Link to='/hoje' data-test="today"><Hoje><span>
         <CircularProgressbar
             value={percent}
             text="Hoje"
@@ -28,7 +28,7 @@ export default function Footer(props){
             trailColor: "transparent"
             })}/>
         </span></Hoje></Link>
-    </>)
+    </div>)
 }
 const Hoje = styled.div`
     height: 90px;

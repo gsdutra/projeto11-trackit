@@ -45,11 +45,11 @@ export default function Login(props){
 		
 		<Form>
 			<form onSubmit={submitLogin}>
-				<input required type="text" value={userEmail} onChange={e => setUserEmail(e.target.value)} placeholder="email" disabled={disabled}/>
+				<input required type="text" value={userEmail} onChange={e => setUserEmail(e.target.value)} placeholder="email" disabled={disabled} data-test="email-input"/>
 
-				<input required type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="senha" disabled={disabled}/>
+				<input required type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="senha" disabled={disabled} data-test="password-input"/>
 
-				<button type="submit" disabled={disabled}>
+				<button type="submit" disabled={disabled} data-test="login-btn">
 						{disabled?
 						<Loader.ThreeDots color="white" height="70" width="70" />
 						:
@@ -57,7 +57,7 @@ export default function Login(props){
 				</button>
 			</form>
 		</Form>
-		<Link to="/cadastro"><span>Não tem uma conta? Cadastre-se!</span></Link>
+		<Link to="/cadastro" data-test="signup-link"><span>Não tem uma conta? Cadastre-se!</span></Link>
 	</Display>)
 }
 
