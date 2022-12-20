@@ -6,7 +6,7 @@ import {useContext} from 'react'
 
 import Context from '../Contexts/ContextUserData'
 
-export default function name(props){
+export default function Header(props){
 
     const contextObj = useContext(Context);
 
