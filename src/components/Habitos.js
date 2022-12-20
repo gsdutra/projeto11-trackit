@@ -81,7 +81,7 @@ export default function Habitos(props){
 	}
 
 	function deletarHab(id){
-		if(confirm("Tem certeza que deseja deletar o hábito?"))
+		if(window.confirm("Tem certeza que deseja deletar o hábito?"))
 		{
 			const prom = axios.delete(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}`, config);
 
